@@ -14,7 +14,7 @@ fn main() {
     run_program(program);
 }
 
-// run program
+// Run program
 fn run_program(program: String) {
     // Initialize variables
     let mut memory = [0_u8; 30000];
@@ -68,7 +68,7 @@ fn run_program(program: String) {
 
             // Decrement memory cell
             '-' => {
-                // prevent underflow
+                // Prevent underflow
                 if memory[memory_pointer] > 0 {
                     memory[memory_pointer] -= 1;
                 } else {
