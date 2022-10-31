@@ -1,37 +1,49 @@
+// Import
+use std::{env, fs, process};
+
 // Main function
 fn main() {
-    // Read program
-    let raw_program = read_program();
+    // Get arguments
+    let args: Vec<String> = env::args().collect();
 
-    // Remove comments
-    let program = remove_comments(raw_program);
-
-    // Run program
-    run_program(program);
-}
-
-// read program from stdin
-fn read_program() -> String {
-    let mut program_reader = Vec::new();
-    println!("Enter your program. Type 'end' to finish.");
-    loop {
-        let mut input = String::new();
-        match std::io::stdin().read_line(&mut input) {
-            Ok(_) => {
-                if input.trim() == "end" {
-                    break;
-                }
-                program_reader.push(input);
+    // Get program from input
+    let mut program = String::new();
+    match &args[1..] {
+        // Load program in memory from input
+        [flag, input] => {
+            // File input
+            if flag == "-f" {
+                program = match fs::read_to_string(input) {
+                    Ok(program) => program,
+                    Err(_) => {
+                        eprintln!("Error: File not found or could not be read");
+                        process::exit(1);
+                    }
+                };
             }
-            Err(error) => println!("Error: {}", error),
+            // String input
+            else if flag == "-s" {
+                program = input.to_string();
+            }
+        }
+
+        // Show help if no input
+        _ => {
+            println!("Usage: brainfuck [-f file] [-s string] [-h]");
+            process::exit(0);
         }
     }
-    program_reader.join("")
+
+    // Clean and run program
+    run_program(remove_comments(program));
 }
 
 // remove invalid characters
 fn remove_comments(raw_program: String) -> String {
+    // Initialize program string
     let mut program = String::new();
+
+    // Remove invalid characters
     for char in raw_program.chars() {
         match char.to_string().as_str() {
             ">" | "<" | "+" | "-" | "." | "," | "[" | "]" | "#" => {
@@ -64,6 +76,7 @@ fn run_program(program: String) {
         match instruction {
             // Move memory pointer to the right
             '>' => {
+                // Wrap around if pointer is at the end of the memory
                 if memory_pointer < memory.len() - 1 {
                     memory_pointer += 1;
                 } else {
@@ -73,6 +86,7 @@ fn run_program(program: String) {
 
             // Move memory pointer to the left
             '<' => {
+                // Warp around memory if pointer is at the start of the memory
                 if memory_pointer > 0 {
                     memory_pointer -= 1;
                 } else {
@@ -81,10 +95,32 @@ fn run_program(program: String) {
             }
 
             // Increment memory cell
-            '+' => memory[memory_pointer] += 1,
+            '+' => {
+                // prevent overflow
+                if memory[memory_pointer] < 255 {
+                    memory[memory_pointer] += 1;
+                } else {
+                    eprintln!(
+                        "Error: Overflow detected at memory address {} and on program pointer {}",
+                        memory_pointer, program_pointer
+                    );
+                    process::exit(1);
+                }
+            }
 
             // Decrement memory cell
-            '-' => memory[memory_pointer] -= 1,
+            '-' => {
+                // prevent underflow
+                if memory[memory_pointer] > 0 {
+                    memory[memory_pointer] -= 1;
+                } else {
+                    eprintln!(
+                        "Error: Underflow detected at memory address {} and on program pointer {}",
+                        memory_pointer, program_pointer
+                    );
+                    process::exit(1);
+                }
+            }
 
             // Output memory cell
             '.' => {
@@ -114,6 +150,7 @@ fn run_program(program: String) {
 
             // Start loop
             '[' => {
+                // If memory cell is 0, skip to the end of the loop
                 if memory[memory_pointer] == 0 {
                     loop_counter += 1;
                     loop {
@@ -132,6 +169,7 @@ fn run_program(program: String) {
 
             // End loop
             ']' => {
+                // If memory cell is not 0, go back to the start of the loop
                 if memory[memory_pointer] != 0 {
                     loop_counter += 1;
                     loop {
@@ -150,6 +188,7 @@ fn run_program(program: String) {
 
             // Debug memory
             '#' => {
+                // Print memory address and value
                 println!(
                     "Memory addresses {:}-{:}",
                     memory_pointer,
