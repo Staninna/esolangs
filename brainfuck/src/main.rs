@@ -47,7 +47,7 @@ fn remove_comments(raw_program: String) -> String {
 // run program
 fn run_program(program: String) {
     // Initialize variables
-    let mut memory = [0_u8; 20];
+    let mut memory = [0_u8; 30000];
     let mut program_pointer = 0_usize;
     let mut memory_pointer = 0_usize;
     let mut loop_counter = 0_usize;
@@ -87,14 +87,28 @@ fn run_program(program: String) {
             '-' => memory[memory_pointer] -= 1,
 
             // Output memory cell
-            '.' => print!("{}", memory[memory_pointer] as char),
+            '.' => {
+                // 10 is the code for a new line
+                if memory[memory_pointer] == 10 {
+                    println!();
+                } else {
+                    print!("{}", memory[memory_pointer] as char);
+                }
+            }
 
             // Get user input
             ',' => {
-                let mut buffer: [u8; 1] = [0];
-                match std::io::Read::read_exact(&mut std::io::stdin(), &mut buffer) {
-                    Ok(_) => memory[memory_pointer] = buffer[0],
+                let mut input = String::new();
+                match std::io::stdin().read_line(&mut input) {
+                    Ok(_) => {}
                     Err(error) => println!("Error: {}", error),
+                }
+
+                // 10 is the code for a new line
+                if input.trim() == "" {
+                    memory[memory_pointer] = 10;
+                } else {
+                    memory[memory_pointer] = input.chars().nth(0).unwrap() as u8;
                 }
             }
 
