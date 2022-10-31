@@ -1,59 +1,17 @@
 // Import
-use std::{env, fs, process};
+use boiler_plate;
+use std::process;
 
 // Main function
 fn main() {
-    // Get arguments
-    let args: Vec<String> = env::args().collect();
-
     // Get program from input
-    let mut program = String::new();
-    match &args[1..] {
-        // Load program in memory from input
-        [flag, input] => {
-            // File input
-            if flag == "-f" {
-                program = match fs::read_to_string(input) {
-                    Ok(program) => program,
-                    Err(_) => {
-                        eprintln!("Error: File not found or could not be read");
-                        process::exit(1);
-                    }
-                };
-            }
-            // String input
-            else if flag == "-s" {
-                program = input.to_string();
-            }
-        }
-
-        // Show help if no input
-        _ => {
-            println!("Usage: brainfuck [-f file] [-s string] [-h]");
-            process::exit(0);
-        }
-    }
-
-    // Clean and run program
-    run_program(remove_comments(program));
-}
-
-// remove invalid characters
-fn remove_comments(raw_program: String) -> String {
-    // Initialize program string
-    let mut program = String::new();
+    let program = boiler_plate::init_1d("brainfuck");
 
     // Remove invalid characters
-    for char in raw_program.chars() {
-        match char.to_string().as_str() {
-            ">" | "<" | "+" | "-" | "." | "," | "[" | "]" | "#" => {
-                program.push(char);
-            }
-            _ => {}
-        }
-    }
+    let program = boiler_plate::remove_invalid_chars("><+-.,[]#", &program);
 
-    program
+    // Run program
+    run_program(program);
 }
 
 // run program

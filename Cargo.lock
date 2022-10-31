@@ -3,9 +3,23 @@
 version = 3
 
 [[package]]
-name = "brainfuck"
+name = "boiler_plate"
 version = "0.1.0"
 
 [[package]]
+name = "brainfuck"
+version = "0.1.0"
+dependencies = [
+ "boiler_plate",
+]
+
+[[package]]
 name = "esolangs"
+version = "0.1.0"
+dependencies = [
+ "boiler_plate",
+]
+
+[[package]]
+name = "spyrodecimal"
 version = "0.1.0"
