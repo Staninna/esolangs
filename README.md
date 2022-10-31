@@ -3,7 +3,9 @@
 
 # Esolangs
 
-A esolang is a programming language that is not intended to be used for practical purposes. They are often used as a joke, educational tool, or as a challenge to write programs in. This repository is a collection of esolangs interpreters.
+A esolang is a programming language that is not intended to be used for practical purposes. They are often used as a joke, educational tool, or as a challenge to write programs in. [here](https://esolangs.org/wiki/Language_list) is a list with most of them.
+
+This repository is a collection of esolangs interpreters.
 
 ## List of esolangs in this repository
 
