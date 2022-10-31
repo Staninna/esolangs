@@ -10,7 +10,8 @@ A esolang is a programming language that is not intended to be used for practica
 
 ### Brainfuck
 
-Brainfuck is a simple esolang that uses only 8 commands. It is Turing complete machine. The commands are:
+Brainfuck is a simple esolang that uses only 8 commands. It is Turing complete machine.
+The instructions are:
 
 | Command | Description                                                                                                                                                                         |
 | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
