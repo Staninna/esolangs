@@ -59,7 +59,7 @@ The instructions are:
 | `s`     | Stores memory in 1 of 6 variables (`a`, `b`, `c`, `d`, `e`, `f`). <br> Variables are not effected by `8` |
 | `r`     | Loads memory from 1 of 6 variables (`a`, `b`, `c`, `d`, `e`, `f`) into memory                            |
 
-HELLO, WORLD:
+Hello, World:
 
 ```spyrodecimal
 22222222222222222222222222222222sc22222222222222222222222222222222222222221sd
