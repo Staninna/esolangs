@@ -1,3 +1,6 @@
+<!-- Disable markdown lint warnings -->
+<!-- markdownlint-disable MD033 -->
+
 # Esolangs
 
 A esolang is a programming language that is not intended to be used for practical purposes. They are often used as a joke, educational tool, or as a challenge to write programs in. This repository is a collection of esolangs interpreters.
@@ -11,6 +14,7 @@ A esolang is a programming language that is not intended to be used for practica
 ### Brainfuck
 
 Brainfuck is a simple esolang that uses only 8 commands. It is Turing complete machine.
+<br>
 The instructions are:
 
 | Command | Description                                                                                                                                                                         |
