@@ -58,3 +58,19 @@ The instructions are:
 | `x`     | Quits the program                                                                                        |
 | `s`     | Stores memory in 1 of 6 variables (`a`, `b`, `c`, `d`, `e`, `f`). <br> Variables are not effected by `8` |
 | `r`     | Loads memory from 1 of 6 variables (`a`, `b`, `c`, `d`, `e`, `f`) into memory                            |
+
+HELLO, WORLD:
+
+```spyrodecimal
+22222222222222222222222222222222sc22222222222222222222222222222222222222221sd
+3331se
+222222211sa
+2221sb8
+rc2222222222221
+rc1
+rd2222222222222221
+rb1
+2221
+ra1
+re31
+```
