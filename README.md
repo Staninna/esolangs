@@ -22,6 +22,7 @@ Brainfuck is a simple esolang that uses only 8 commands. It is Turing complete m
 | `,`     | Accept one byte of input, storing its value in the byte at the data pointer.                                                                                                        |
 | `[`     | If the byte at the data pointer is zero, then instead of moving the instruction pointer forward to the next command, jump it forward to the command after the matching `]` command. |
 | `]`     | If the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching `[` command. |
+| `#`     | Print the current memory state from the data pointer to data pointer + 16                                                                                                           |
 
 Hello World:
 

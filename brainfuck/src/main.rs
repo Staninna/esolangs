@@ -34,7 +34,7 @@ fn remove_comments(raw_program: String) -> String {
     let mut program = String::new();
     for char in raw_program.chars() {
         match char.to_string().as_str() {
-            ">" | "<" | "+" | "-" | "." | "," | "[" | "]" => {
+            ">" | "<" | "+" | "-" | "." | "," | "[" | "]" | "#" => {
                 program.push(char);
             }
             _ => {}
@@ -146,6 +146,19 @@ fn run_program(program: String) {
                         }
                     }
                 }
+            }
+
+            // Debug memory
+            '#' => {
+                println!(
+                    "Memory addresses {:}-{:}",
+                    memory_pointer,
+                    memory_pointer + 16
+                );
+                for i in memory_pointer..memory_pointer + 16 {
+                    print!("{:} ", memory[i]);
+                }
+                println!();
             }
             _ => panic!("Invalid instruction"),
         }
