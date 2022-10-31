@@ -1,6 +1,6 @@
 // Import
 use boiler_plate;
-use std::process;
+use std::{io, process};
 
 // Main function
 fn main() {
@@ -93,7 +93,7 @@ fn run_program(program: String) {
             // Get user input
             ',' => {
                 let mut input = String::new();
-                match std::io::stdin().read_line(&mut input) {
+                match io::stdin().read_line(&mut input) {
                     Ok(_) => {}
                     Err(error) => println!("Error: {}", error),
                 }
