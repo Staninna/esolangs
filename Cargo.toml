@@ -6,16 +6,21 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-boiler_plate = { path = "./boiler_plate" }
 rand = "0.8.4"
 
 [workspace]
 
 members = [
+    "boiler_plate",
     "brainfuck",
     "spyrodecimal",
+    "barely",
 ]
-default-members = ["spyrodecimal"]
+
+[lib]
+name = "boiler_plate"
+path = "boiler_plate/src/lib.rs"
+
 
 [[bin]]
 name = "brainfuck"
@@ -24,3 +29,7 @@ path = "brainfuck/src/main.rs"
 [[bin]]
 name = "spyrodecimal"
 path = "spyrodecimal/src/main.rs"
+
+[[bin]]
+name = "barely"
+path = "barely/src/main.rs"

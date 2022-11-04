@@ -3,6 +3,13 @@
 version = 3
 
 [[package]]
+name = "barely"
+version = "0.1.0"
+dependencies = [
+ "boiler_plate",
+]
+
+[[package]]
 name = "boiler_plate"
 version = "0.1.0"
 
@@ -23,7 +30,6 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 name = "esolangs"
 version = "0.1.0"
 dependencies = [
- "boiler_plate",
  "rand",
 ]
 
