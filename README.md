@@ -9,10 +9,11 @@ This repository is a collection of esolangs interpreters.
 
 ## List of esolangs in this repository
 
-| Name                                                   | Description                                           | Goto readme                |
-| ------------------------------------------------------ | ----------------------------------------------------- | -------------------------- |
-| [Brainfuck](https://esolangs.org/wiki/Brainfuck)       | A simple esolang that uses only 8 instructions.       | [README.md](#brainfuck)    |
-| [Spyrodecimal](https://esolangs.org/wiki/Spyrodecimal) | It was designed to have only numbers as instructions. | [README.md](#spyrodecimal) |
+| Name                                                   | Description                                                | Goto readme                |
+| ------------------------------------------------------ | ---------------------------------------------------------- | -------------------------- |
+| [Brainfuck](https://esolangs.org/wiki/Brainfuck)       | A simple esolang that uses only 8 instructions.            | [README.md](#brainfuck)    |
+| [Spyrodecimal](https://esolangs.org/wiki/Spyrodecimal) | It was designed to have only numbers as instructions.      | [README.md](#spyrodecimal) |
+| [Barely](https://esolangs.org/wiki/Barely)             | The goal is to have as small of a interpreter as possible. | [README.md](#barely)       |
 
 ### Brainfuck
 
@@ -75,4 +76,35 @@ rb1
 2221
 ra1
 re31
+```
+
+### Barely
+
+Barely is a esolang that had the goal to have as small of a sturing complete interpreter as possible. And the original was just 59 bytes in size. it is Turing complete and one-dimensional.
+<br>
+The instructions are:
+
+| Command                        | Description                                        |
+| ------------------------------ | -------------------------------------------------- |
+| `]`                            | Exits program                                      |
+| `^`                            | If accumulator is 0, execute `b` instruction       |
+| `b`                            | Add jump to ip                                     |
+| `g`                            | Accumulator is content of memory at memory pointer |
+| `h`                            | Add 71 to accumulator                              |
+| `i`                            | Increment memory pointer                           |
+| `j`                            | Increment accumulator                              |
+| `k`                            | Decrement jump by 1                                |
+| `m`                            | memory at memory pointer is accumulator            |
+| `n`                            | Decrement memory pointer by 1                      |
+| `o`                            | Decrement accumulator by 1                         |
+| `p`                            | Add 10 to jump                                     |
+| `t`                            | Store user input in accumulator                    |
+| `x`                            | Output accumulator                                 |
+| `f` \|\| `l` \|\| `q` \|\| `s` | No operation                                       |
+| `~`                            | No operation also marks start of program           |
+
+Hello World:
+
+```barely
+]xhhhhooooooooohhhhhhxooooooooxooooooxjjjxhoooohhhxhohhhhhhhxhhhhjjjhhhxhhhhooooooooohhhhhhxjjjxxjjjjjjjxjhhhhxjhhhhhhhhjjjhh~
 ```
