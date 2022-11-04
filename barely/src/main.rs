@@ -24,7 +24,7 @@ fn main() {
 fn run_program(program: String) {
     let mut memory = [0_u8; 30000]; // Officially unlimited and uninitialized
     let mut memory_pointer = 0_usize;
-    let mut program_pointer = program.chars().position(|c| c == '~').unwrap() - 1;
+    let mut program_pointer = program.chars().position(|c| c == '~').unwrap();
     let mut jump_offset = 0_usize;
     let mut accumulator = 126_u8;
     let mut started = false;
