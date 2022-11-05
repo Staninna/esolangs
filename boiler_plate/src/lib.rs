@@ -2,7 +2,7 @@
 use std::{env, fs, io, process};
 
 // Load program from input
-pub fn init_1d(language_name: &str) -> String {
+pub fn init_1d(language_name: &str, version: &str, description: &str) -> String {
     // Get arguments
     let args: Vec<String> = env::args().collect();
 
@@ -13,7 +13,7 @@ pub fn init_1d(language_name: &str) -> String {
         [flag, input] => {
             // File input
             match flag.as_str() {
-                "-f" => {
+                "-f" | "--file" => {
                     program = match fs::read_to_string(input) {
                         Ok(program) => program,
                         Err(_) => {
@@ -22,13 +22,21 @@ pub fn init_1d(language_name: &str) -> String {
                         }
                     };
                 }
-                "-s" => program = input.to_string(),
-                "-h" => {
+                "-s" | "--string" => program = input.to_string(),
+                "-v" | "--version" => {
+                    println!("{} {}", language_name, version);
+                    println!("{}", description);
+                    process::exit(0);
+                }
+                "-h" | "--help" => {
+                    println!("{} {}", language_name, version);
+                    println!("{}", description);
                     println!("Usage: {} [flag] [input]", language_name);
                     println!("Flags:");
-                    println!("    -f: File input");
-                    println!("    -s: String input");
-                    println!("    -h: Help");
+                    println!("  -f --file [file]  Load program from file");
+                    println!("  -s --string [string]  Load program from string");
+                    println!("  -v --version  Print version");
+                    println!("  -h --help  Display this help message");
                     process::exit(0);
                 }
                 _ => {
