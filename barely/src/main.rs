@@ -1,38 +1,35 @@
 // Import
-use boiler_plate;
-use std::process;
+use std::{io, process};
 
 // Main function
 fn main() {
     // Get program from input
-    let program = boiler_plate::init_1d("barely");
+    let program = boiler_plate::init_1d(
+        "barely",
+        "0.1.0",
+        "A esolang that its goal is to be the smallest interpreter binary as possible",
+    );
 
     // Remove invalid characters
-    let program = boiler_plate::remove_invalid_chars("]^bghijkmnoptxf~lqs", &program); // TODO add valid characters
+    let program = boiler_plate::remove_invalid_chars("]^bghijkmnoptxf~lqs", &program);
 
-    // Check if program has start and end
-    if program.contains("]") && program.contains("~") {
-        // Run program
-        run_program(program);
-    } else {
-        // Print error
-        println!("Error: Program does not contain start or end");
-    }
+    // Run program
+    run_program(program);
 }
 
 // Run program
 fn run_program(program: String) {
-    let mut memory = [0_u8; 30000]; // Officially unlimited and uninitialized
+    let mut memory = [0_u16; 30000]; // Officially unlimited and uninitialized
     let mut memory_pointer = 0_usize;
-    let mut program_pointer = program.chars().position(|c| c == '~').unwrap();
+    let mut instruction_pointer = program.chars().position(|c| c == '~').unwrap();
     let mut jump_offset = 0_usize;
-    let mut accumulator = 126_u8;
+    let mut accumulator = 126_u16;
     let mut started = false;
 
     // Main loop
     loop {
         // Read instruction from program
-        let instruction = match program.chars().nth(program_pointer) {
+        let instruction = match program.chars().nth(instruction_pointer) {
             Some(instruction) => instruction,
             _ => {
                 println!("Error: Program pointer out of bounds");
@@ -41,42 +38,85 @@ fn run_program(program: String) {
         };
 
         // Execute instruction
-        match (instruction, started) {
-            (']', true) => todo!(),
-            ('^', true) => todo!(),
-            ('b', true) => todo!(),
-            ('g', true) => todo!(),
-            ('h', true) => todo!(),
-            ('i', true) => todo!(),
-            ('j', true) => todo!(),
-            ('k', true) => todo!(),
-            ('m', true) => todo!(),
-            ('n', true) => todo!(),
-            ('o', true) => todo!(),
-            ('p', true) => todo!(),
-            ('t', true) => todo!(),
-            ('x', true) => todo!(),
+        match started {
+            true => match instruction {
+                // Exit program
+                ']' => process::exit(0),
 
-            // Start program
-            ('~', false) => started = true,
+                // If accumulator is 0, execute b instruction
+                '[' => {
+                    if accumulator == 0 {
+                        instruction_pointer += jump_offset;
+                    }
+                }
 
-            // No operation
-            ('f', true) | ('l', true) | ('q', true) | ('s', true) => {}
+                // Add jump to ip
+                'b' => instruction_pointer += jump_offset,
 
-            // Found instruction before start
-            (_, false) => {
-                println!("Error: Program has not started");
-                process::exit(1);
-            }
+                // Accumulator is memory
+                'g' => memory[memory_pointer] = accumulator,
 
-            // Invalid instruction
-            (_, true) => {
-                println!("Error: Invalid instruction");
-                process::exit(1);
+                'h' => accumulator += 71,
+
+                // Increment memory pointer
+                'i' => memory_pointer += 1,
+
+                // Increment accumulator
+                'j' => accumulator += 1,
+
+                // Decrement jump
+                'k' => jump_offset -= 1,
+
+                // Memory is accumulator
+                'm' => accumulator = memory[memory_pointer],
+
+                // Decrement memory pointer
+                'n' => memory_pointer -= 1,
+
+                // Decrement accumulator
+                'o' => accumulator -= 1,
+
+                // Add 10 to jump
+                'p' => jump_offset += 10,
+
+                // Store user input in accumulator
+                't' => {
+                    let mut input = String::new();
+                    io::stdin()
+                        .read_line(&mut input)
+                        .expect("Failed to read line");
+                    accumulator = input.chars().next().unwrap() as u16;
+                }
+
+                // Print accumulator
+                'x' => print!("{}", accumulator as u8 as char),
+
+                // No operation
+                'f' | 'l' | 'q' | 's' => {}
+
+                // Invalid instruction
+                _ => {
+                    println!("Error: Invalid instruction");
+                    process::exit(1);
+                }
+            },
+            false => {
+                match instruction {
+                    // Start program
+                    '~' => started = true,
+
+                    // Found instruction before start
+                    _ => {
+                        println!(
+                            "Error: Program has not started or found instruction before start"
+                        );
+                        process::exit(1);
+                    }
+                }
             }
         }
 
         // Increment program pointer
-        program_pointer -= 1;
+        instruction_pointer -= 1;
     }
 }
