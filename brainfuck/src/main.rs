@@ -5,7 +5,11 @@ use std::{io, process};
 // Main function
 fn main() {
     // Get program from input
-    let program = boiler_plate::init_1d("brainfuck");
+    let program = boiler_plate::init_1d(
+        "brainfuck",
+        "0.1.0",
+        "A simple esolang using only 8 instructions",
+    );
 
     // Remove invalid characters
     let program = boiler_plate::remove_invalid_chars("><+-.,[]#", &program);

@@ -7,7 +7,11 @@ use std::{io, thread, time::Duration};
 // Main function
 fn main() {
     // Get program from input
-    let program = boiler_plate::init_1d("spyrodecimal");
+    let program = boiler_plate::init_1d(
+        "spyrodecimal",
+        "0.1.0",
+        "A esolang that was designed to have only numbers",
+    );
 
     // Remove invalid characters
     let program = boiler_plate::remove_invalid_chars("0123456789qxsrabcdefg", &program);
