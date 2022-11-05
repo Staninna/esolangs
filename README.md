@@ -49,8 +49,8 @@ The instructions are:
 | ------- | -------------------------------------------------------------------------------------------------------- |
 | `0`     | Pauses for 1/10 seconds                                                                                  |
 | `1`     | Outputs the ASCII byte in memory                                                                         |
-| `2`     | Increase memory by 1                                                                                     |
-| `3`     | Decrease memory by 1                                                                                     |
+| `2`     | Increase memory                                                                                          |
+| `3`     | Decrease memory                                                                                          |
 | `4`     | Store input in memory                                                                                    |
 | `5`     | Print new line                                                                                           |
 | `6`     | generate random number between 1 and 256 and store it in memory                                          |
@@ -84,24 +84,24 @@ Barely is a esolang that had the goal to have as small of a sturing complete int
 <br>
 The instructions are:
 
-| Command                        | Description                                        |
-| ------------------------------ | -------------------------------------------------- |
-| `]`                            | Exits program                                      |
-| `^`                            | If accumulator is 0, execute `b` instruction       |
-| `b`                            | Add jump to ip                                     |
-| `g`                            | Accumulator is content of memory at memory pointer |
-| `h`                            | Add 71 to accumulator                              |
-| `i`                            | Increment memory pointer                           |
-| `j`                            | Increment accumulator                              |
-| `k`                            | Decrement jump by 1                                |
-| `m`                            | memory at memory pointer is accumulator            |
-| `n`                            | Decrement memory pointer by 1                      |
-| `o`                            | Decrement accumulator by 1                         |
-| `p`                            | Add 10 to jump                                     |
-| `t`                            | Store user input in accumulator                    |
-| `x`                            | Output accumulator                                 |
-| `f` \|\| `l` \|\| `q` \|\| `s` | No operation                                       |
-| `~`                            | No operation also marks start of program           |
+| Command                        | Description                                  |
+| ------------------------------ | -------------------------------------------- |
+| `]`                            | Exits program                                |
+| `^`                            | If accumulator is 0, execute `b` instruction |
+| `b`                            | Add jump to ip                               |
+| `g`                            | Accumulator is memory                        |
+| `h`                            | Add 71 to accumulator                        |
+| `i`                            | Increment memory pointer                     |
+| `j`                            | Increment accumulator                        |
+| `k`                            | Decrement jump                               |
+| `m`                            | memory is accumulator                        |
+| `n`                            | Decrement memory pointer                     |
+| `o`                            | Decrement accumulator                        |
+| `p`                            | Add 10 to jump                               |
+| `t`                            | Store user input in accumulator              |
+| `x`                            | Output accumulator                           |
+| `f` \|\| `l` \|\| `q` \|\| `s` | No operation                                 |
+| `~`                            | No operation also marks start of program     |
 
 Hello World:
 
