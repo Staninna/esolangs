@@ -11,8 +11,8 @@ pub fn init_1d(language_name: &str, version: &str, description: &str) -> String 
     match &args[1..] {
         // Load program in memory from input
         [flag, input] => {
-            // File input
             match flag.as_str() {
+                // Input from file
                 "-f" | "--file" => {
                     program = match fs::read_to_string(input) {
                         Ok(program) => program,
@@ -22,23 +22,11 @@ pub fn init_1d(language_name: &str, version: &str, description: &str) -> String 
                         }
                     };
                 }
+
+                // Input from sting
                 "-s" | "--string" => program = input.to_string(),
-                "-v" | "--version" => {
-                    println!("{} {}", language_name, version);
-                    println!("{}", description);
-                    process::exit(0);
-                }
-                "-h" | "--help" => {
-                    println!("{} {}", language_name, version);
-                    println!("{}", description);
-                    println!("Usage: {} [flag] [input]", language_name);
-                    println!("Flags:");
-                    println!("  -f --file [file]  Load program from file");
-                    println!("  -s --string [string]  Load program from string");
-                    println!("  -v --version  Print version");
-                    println!("  -h --help  Display this help message");
-                    process::exit(0);
-                }
+
+                // Invalid flag
                 _ => {
                     eprintln!("Error: Invalid flag");
                     process::exit(1);
@@ -46,9 +34,47 @@ pub fn init_1d(language_name: &str, version: &str, description: &str) -> String 
             }
         }
 
-        // Get user input
+        [flag] => match flag.as_str() {
+            // Print version
+            "-v" | "--version" => {
+                println!("{} {}", language_name, version);
+                println!("{}", description);
+                process::exit(0);
+            }
+
+            // Show help
+            "-h" | "--help" => {
+                println!("{} {}", language_name, version);
+                println!("{}", description);
+                println!("Usage: {} [flag] [input]", language_name);
+                println!("Flags:");
+                println!("  -f --file [file]  Load program from file");
+                println!("  -s --string [string]  Load program from string");
+                println!("  -v --version  Print version");
+                println!("  -h --help  Display this help message");
+                process::exit(0);
+            }
+
+            // Invalid flag
+            _ => {
+                match flag.as_str() {
+                    // Input from file
+                    "-f" | "--file" => {
+                        eprintln!("Error: No file specified");
+                    }
+
+                    // Input from sting
+                    "-s" | "--string" => eprintln!("Error: No string specified"),
+
+                    // Invalid flag
+                    _ => eprintln!("Error: Invalid flag"),
+                }
+                process::exit(1);
+            }
+        },
+
+        // Get program from user
         _ => {
-            // Get program from user
             let mut program = String::new();
             println!("Input program input `Exit` to exit: ");
 
